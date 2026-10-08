@@ -1,0 +1,161 @@
+:root {
+  --border: #3b3b3b;
+  --background: #e0f8d0;
+  --primary: #346856;
+  --secondary: #88c070;
+  --text: #e0f8d0;
+  --button: #346856;
+  --red: rgb(240, 87, 87);
+  --gray: #BAB5B5;
+  --screen: #e2ddb4;
+}
+
+body {
+  font-family: "Geist Pixel", Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 15px 20px;
+  background-color: var(--background);
+  color: var(--primary);
+}
+
+h1 {
+  font-family: "Jersey 25", Impact, "Arial Narrow Bold",
+    sans-serif;
+  font-size: 2.5rem;
+}
+
+.video-game-container {
+  background-color: var(--gray);
+  /*
+* Created with https://www.css-gradient.com
+* Gradient link: https://www.css-gradient.com/?colors=a2a2a2@0,bab5b5@19,aeaeae@54,3e3e3e@100&gt=l&gd=dbr
+*/
+background: #979797;
+background: linear-gradient(135deg, #979797 0%, #DCDCDC 27%, #AEAEAE 71%, #3e3e3e6e 100%);
+  border-radius: 10px;
+  width: 520px;
+  height: 600px;
+  padding: 20px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 10px 10px 5px rgba(128, 128, 128, 0.363);
+  position: relative;
+  transition: ease-in 0.5s all;
+}
+
+.video-game-container:hover {
+    transform: translateY(-3px);
+      box-shadow: 10px 10px 8px rgba(128, 128, 128, 0.699);
+
+}
+
+.screen-container {
+  border: 10px solid var(--border);
+  border-radius: 10px 10px 0px 0px;
+  background-color: var(--screen);
+  height: 80%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  align-items: center;
+}
+.game-title {
+  background-color: var(--border);
+  color: var(--text);
+  width: 100%;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 2px;
+  border-radius: 0px 0px 3px 3px;
+}
+
+.main-container {
+  display: none;
+  width: 100%;
+}
+
+.player-container {
+  /*display: flex;
+  flex-direction: row;
+  gap: 10px;
+  height: 100%;*/
+  display: none;
+}
+.player {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  padding: 18px 12px;
+  transition: all 0.3s ease;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1px 4px;
+  bottom: 0;
+  position: absolute;
+  overflow-y: auto;
+  width: 90%;
+  margin: 10px auto 15px;
+}
+
+#battle-log {
+  display: none;
+  border-top: 1px dashed var(--primary);
+  width: 100%;
+  margin-top: 3px;
+  overflow: auto;
+}
+
+button {
+  padding: 5px 25px;
+  border-radius: 50px;
+  margin-bottom: 5px;
+  border: none;
+  font-size: 1.5rem;
+  background-color: var(--button);
+  color: var(--text);
+  transition: all 0.3s ease;
+  font-family: "Geist Pixel", Arial, Helvetica, sans-serif;
+}
+
+.js-attack-button {
+  background-color: var(--red);
+}
+
+button:hover {
+  opacity: 80%;
+}
+
+.js-attack-button, .js-defend-button, .js-magic-button, .js-persuade-button, .js-evade-button {
+  display: none;
+}
+
+.secretStat {
+  display: none;
+}
+
+button:disabled {
+background-color: var(--border);
+}
+
+@media screen and (max-width: 700px) {
+    .video-game-container {
+        max-width: 400px;
+        max-height: 550px;
+    }
+
+}
+
+@media screen and (max-width: 400px) {
+    .video-game-container {
+        max-width: 300px;
+        max-height: 550px;
+    }
+
+}
