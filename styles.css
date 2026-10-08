@@ -77,11 +77,9 @@ background: linear-gradient(135deg, #979797 0%, #DCDCDC 27%, #AEAEAE 71%, #3e3e3
   width: 100%;
 }
 
-.player-container {
-  /*display: flex;
-  flex-direction: row;
+#player-stats {
+   flex-direction: row;
   gap: 10px;
-  height: 100%;*/
   display: none;
 }
 .player {
@@ -132,12 +130,16 @@ button:hover {
   opacity: 80%;
 }
 
-.js-attack-button, .js-defend-button, .js-magic-button, .js-persuade-button, .js-evade-button {
+.js-attack-button, .js-defend-button, .js-magic-button, .js-persuade-button, .js-evade-button, .js-stats-button {
   display: none;
 }
 
 .secretStat {
   display: none;
+}
+
+#winner {
+    display: none;
 }
 
 button:disabled {
