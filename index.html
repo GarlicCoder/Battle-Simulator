@@ -14,9 +14,11 @@
 <body>
   <div class="video-game-container">
     <div class="screen-container">
-      <h1>Battle Simulator</h1>
+             <img src="https://web.archive.org/web/20090731102809/http://hk.geocities.com/garveyhk/hamster/hamster/fight1.gif">
+ <h1>Battle Simulator</h1>
       <div class="main-container">
-        <div class="player-container">
+    
+        <div id="player-stats">
           <div class="player-one player"></div>
           <hr />
           <div class="player-two player">
@@ -24,9 +26,14 @@
           </div>
         </div>
       </div>
-      <div id="battle-log"></div>
+      <div id="battle-log">
+        
+      </div>
+      <div id="winner">
+        <img src="https://web.archive.org/web/20091027094718/http://geocities.com/ksaaim/Images/dance5.gif">
+      </div>
     </div>
-    <div class="game-title">gameboy simulator</div>
+    <div class="game-title">garlicboy</div>
     <div class="button-container">
       <button class="js-start-button js-button">Start</button>
       <button class="js-attack-button js-button">Attack</button>
@@ -34,6 +41,8 @@
       <button class="js-magic-button js-button">Magic</button>
       <button class="js-persuade-button js-button">Persuade</button>
       <button class="js-evade-button js-button">Evade</button>
+            <button class="js-stats-button js-button"  onclick="toggleStats()">Stats</button>
+
 
 
       <button class="js-restart">Restart</button>
