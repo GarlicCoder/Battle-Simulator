@@ -2,85 +2,62 @@
 const mainContainer = document.querySelector(".main-container");
 const startButton = document.querySelector(".js-start-button");
 const restartButton = document.querySelector(".js-restart");
+const defendButton = document.querySelector(".js-defend-button");
+const statsButton = document.querySelector(".js-stats-button");
 const playerOneEl = document.querySelector(".player-one");
 const playerTwoEl = document.querySelector(".player-two");
 const attackButton = document.querySelector(".js-attack-button");
 const battleLog = document.getElementById("battle-log");
 const secretStat = document.querySelector(".secretStat");
+const winnerContainer = document.getElementById("winner");
+const playerStats = document.getElementById("player-stats");
 
 // declare names
 const names = [
-  "Laios", // tall-man 0
-  "Falin", // tall-man 1
-  "Marcille", // half elf & half tall-man 2
-  "Chilchuck", // half foot 3
-  "Senshi", // dwarf 4
-  "Izutsumi", // tall-man 5
-  "Goku", // tall-man 6
-  "Vegeta", // dwarf 7
-  "Gohan", // tall-man 8
-  "Goten", // half-foot 9
-  "Trunks", // kobold 10
-  "Deku", // tall-man 11
-  "Bakugo", // dwarf 12
-  "Coco", // gnome 13
-  "Shin Chan", // elf 14
-  "Spongebob", // tall-man 15
-  "Kirby", // tall-man 16
-  "Link", // tall-man 17
-  "Zelda", // ogre 18
-  "Inuyasha", // Orc 19
-  "Frieren", // Orc 20
+  "Goku", 
+  "Vegeta",
+  "Gohan", 
+  "Goten", 
+  "Trunks", 
+  "Deku", 
+  "Bakugo", 
+  "Shin Chan", 
+  "Spongebob", 
+  "Kirby", 
+  "Zelda", 
+  "Inuyasha", 
+  "Frieren",
   "Peter Griffin", 
   "Bluey",
   "Chuu from LOONA",
   "Pikachu",
   "Ru Paul",
-  "Garfield"
+  "Garfield", 
+  "RX-78-2", 
+  "underscores",
+  "ninajirachi",
+  "Porter Robinson",
+  "Sakura",
+  "Hello Kitty",
+  "glep",
+  "pink pantheress",
+  "Meredith from Grey's Anatomy"
 ];
 
-// declare types
-const types = [
-  "Elf", // 0
-  "Ogre", // 1
-  "Tall-man", // 2
-  "Half-foot", // 3
-  "Beast-man", // 4
-  "Dwarf", // 5
-  "Kbold", // 6
-  "Orc", // 7
-  "Gnome", // 8
-];
 
 // function to get random number between low and highest number
 function getRandomNumberBetween(low, high) {
   return Math.floor(low + Math.random() * (high - low + 1));
 }
-/*
-function matchType() {
-  if (
-    name === 0 ||
-    name === 1 ||
-    name === 5 ||
-    name === 6 ||
-    name === 8 ||
-    name === 11 ||
-    name === 15 ||
-    name === 16 ||
-    name === 17
-  ) {
-    type = types[2];
-  } else {
-    type = "Other";
-  }
-}; */
+
+function randomName(names) {
+   return Math.floor(Math.random() * names.length);
+}
 
 // function to generate random stats
 function createCharacter() {
   return {
-    name: names[getRandomNumberBetween(0, 26)],
-    type: types[getRandomNumberBetween(0, 8)],
-    age: getRandomNumberBetween(21, 80),
+    name: names[randomName(names)],
     health: getRandomNumberBetween(100, 200),
     hitPoints: getRandomNumberBetween(5, 30),
     defense: getRandomNumberBetween(1, 29),
@@ -115,6 +92,7 @@ startButton.addEventListener("click", function () {
   startButton.style.display = "none";
   attackButton.style.display = "block";
   battleLog.style.display = "block";
+
 });
 
 // restart the page
@@ -127,6 +105,8 @@ let playerOneHealth = playerOne.health;
 let playerTwoHealth = playerTwo.health;
 let playerOneDamage;
 let playerTwoDamage;
+let playerOneDefense = playerOne.defense;
+let playerTwoDefense = playerTwo.defense;
 let playerOneSecretStat = playerOne.secretStat;
 let playerTwoSecretStat = playerTwo.secretStat;
 
@@ -134,7 +114,11 @@ let playerTwoSecretStat = playerTwo.secretStat;
 function randomSecretStat() {
   playerOneSecretStat = getRandomNumberBetween(0, 100);
   playerTwoSecretStat = getRandomNumberBetween(0, 100);
-  console.log("Player One Secret Stat: " + playerOneSecretStat);
+displaySecretStat
+}
+
+function displaySecretStat() {
+      console.log("Player One Secret Stat: " + playerOneSecretStat);
   console.log("Player Two Secret Stat: " + playerTwoSecretStat);
 }
 
@@ -144,9 +128,26 @@ function randomDamagePoints() {
     playerOne.hitPoints - Math.floor(Math.random() * playerTwo.defense);
   playerTwoDamage =
     playerTwo.hitPoints - Math.floor(Math.random() * playerOne.defense);
-  console.log("Player One Damage: " + playerOneDamage);
-  console.log("Player Two Damage: " + playerTwoDamage);
+    if (playerOneDamage <= 0) {
+        playerOneDamage = 0;
+    } else if (playerTwoDamage <= 0) {
+        playerTwoDamage = 0;
+
+    }
+    displayDamage();
 };
+
+function displayDamage() {
+          console.log("Player One Damage: " + playerOneDamage);
+  console.log("Player Two Damage: " + playerTwoDamage);
+}
+
+function randomDefensePoints() {
+    playerOneDefense = playerOne.defense - Math.floor(Math.random() * playerOne.defense);
+    playerTwoDefense = playerTwo.defense - Math.floor(Math.random() * playerTwo.defense);
+    
+};
+
 
 // function when player one attacks successfully
 function playerOneAttack() {
@@ -201,6 +202,47 @@ function playerTwoAttack() {
     "<br>";
 };
 
+function displayDefense() {
+     console.log("Player One Defense: " + playerOneDefense);
+        console.log("Player Two Defense: " + playerTwoDefense);
+}
+
+// function when defense is successful 
+function defendSuccessText(defendant, attacker) {
+    battleLog.innerHTML = "<strong>" + defendant.name + "</strong> attempts to defend against <strong>" + attacker.name + "</strong>. 0 damage! Awesome!<br>";
+     battleLog.innerHTML +=
+    "<strong>" +
+    playerOne.name +
+    " health:</strong> " +
+    playerOneHealth +
+   "<br>";
+  battleLog.innerHTML +=
+    "<strong>" +
+    playerTwo.name +
+    " health:</strong> " +
+    playerTwoHealth +
+    "<br>";
+}
+
+// function when defense is not successful 
+function defendFailText(defendant, attacker) {
+    battleLog.innerHTML = "<strong>" + defendant.name + "</strong> attempts to defend against <strong>" + attacker.name + "</strong>. <br>A bit of damage was done.<br>";
+    playerOneHealth -= playerTwoDamage;
+
+ battleLog.innerHTML +=
+    "<strong>" +
+    playerOne.name +
+    " health:</strong> " +
+    playerOneHealth + " (-" + playerTwoDamage + 
+    ")<br>";
+  battleLog.innerHTML +=
+    "<strong>" +
+    playerTwo.name +
+    " health:</strong> " + 
+    playerTwoHealth + "<br>";
+}
+
+
 // function when secret stat is ===
 function drawText() {
   battleLog.innerHTML =
@@ -214,7 +256,8 @@ function drawText() {
 // function when no damage occurs
 function noDamageText(attacker, receiver, receiverHealth, attackerHealth) {
   battleLog.innerHTML =
-    attacker.name + " attempts to hit " + receiver.name + " but misses!<br>";
+   "<strong>" + attacker.name + "</strong> attempts to hit <strong>" + receiver.name + "</strong> but misses!<br>";
+   
   battleLog.innerHTML +=
     "<strong>" + attacker.name + " health:</strong> " + attackerHealth + "<br>";
   battleLog.innerHTML +=
@@ -223,6 +266,7 @@ function noDamageText(attacker, receiver, receiverHealth, attackerHealth) {
 
 // function when health reaches 0
 function gameOverText(winner) {
+    winnerContainer.style.display = "block";
   battleLog.innerHTML =
     "<strong>" +
     playerOne.name +
@@ -234,7 +278,8 @@ function gameOverText(winner) {
     playerTwo.name +
     " health:</strong> " +
     playerTwoHealth;
-  battleLog.innerHTML += "<br>Game Over! " + winner.name + " wins!";
+  battleLog.innerHTML += "<br>Game Over! <strong>" + winner.name + "</strong> wins!";
+ 
   attackButton.disabled = true;
 }
 
@@ -242,6 +287,8 @@ function gameOverText(winner) {
 startButton.addEventListener("click", function () {
   battleLog.innerHTML =
     "<strong>" + playerOne.name + "</strong> and <strong>" + playerTwo.name + "</strong> begin to battle!" + "<br>";
+statsButton.style.display = "block";
+defendButton.style.display = "block";
 });
 
 // battle button, battling until a players health hits 0
@@ -271,3 +318,36 @@ attackButton.addEventListener("click", function () {
     gameOverText(playerOne);
   }
 });
+
+// defend button
+defendButton.addEventListener("click", function () {
+    displayDefense();
+    randomSecretStat();
+    randomDamagePoints();
+    if (playerOneSecretStat > playerTwoSecretStat) {
+        if (playerOneDefense > playerTwoDefense) {
+            defendSuccessText(playerOne, playerTwo)
+        } else if (playerOneDefense < playerTwoDefense) {
+              randomDamagePoints();
+            defendFailText(playerOne, playerTwo);
+        }}
+        else {
+            randomDamagePoints()
+            defendFailText(playerOne, playerTwo);
+        }
+          if (playerOneHealth <= 0) {
+    gameOverText(playerTwo);
+  } else if (playerTwoHealth <= 0) {
+    gameOverText(playerOne);
+  }
+});
+
+
+
+function toggleStats() {
+    if (playerStats.style.display === "none") {
+        playerStats.style.display = "flex";
+    } else {
+        playerStats.style.display = "none";
+    }
+}
