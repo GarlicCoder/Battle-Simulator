@@ -137,6 +137,19 @@ function randomDamagePoints() {
     displayDamage();
 };
 
+function decreasedDamagePoints() {
+  playerOneDamage = playerOne.hitPoints - (Math.floor(Math.random() * playerTwo.defense) / 2);
+  playerTwoDamage = playerTwo.hitPoints - (Math.floor(Math.random() * playerOne.defense) / 2);
+   if (playerOneDamage <= 0) {
+        playerOneDamage = 0;
+    } else if (playerTwoDamage <= 0) {
+        playerTwoDamage = 0;
+
+    }
+        displayDamage();
+
+;}
+
 function displayDamage() {
           console.log("Player One Damage: " + playerOneDamage);
   console.log("Player Two Damage: " + playerTwoDamage);
@@ -281,6 +294,7 @@ function gameOverText(winner) {
   battleLog.innerHTML += "<br>Game Over! <strong>" + winner.name + "</strong> wins!";
  
   attackButton.disabled = true;
+  defendButton.disabled = true;
 }
 
 // battle button, initiating battle
@@ -323,16 +337,16 @@ attackButton.addEventListener("click", function () {
 defendButton.addEventListener("click", function () {
     displayDefense();
     randomSecretStat();
-    randomDamagePoints();
+    decreasedDamagePoints()
     if (playerOneSecretStat > playerTwoSecretStat) {
         if (playerOneDefense > playerTwoDefense) {
             defendSuccessText(playerOne, playerTwo)
         } else if (playerOneDefense < playerTwoDefense) {
-              randomDamagePoints();
+          
             defendFailText(playerOne, playerTwo);
         }}
         else {
-            randomDamagePoints()
+       
             defendFailText(playerOne, playerTwo);
         }
           if (playerOneHealth <= 0) {
