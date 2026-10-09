@@ -8,7 +8,6 @@ const playerOneEl = document.querySelector(".player-one");
 const playerTwoEl = document.querySelector(".player-two");
 const attackButton = document.querySelector(".js-attack-button");
 const battleLog = document.getElementById("battle-log");
-const secretStat = document.querySelector(".secretStat");
 const winnerContainer = document.getElementById("winner");
 const playerStats = document.getElementById("player-stats");
 
@@ -41,8 +40,25 @@ const names = [
   "Hello Kitty",
   "glep",
   "pink pantheress",
-  "Meredith from Grey's Anatomy"
+  "Meredith from Grey's Anatomy",
+  "Luhan",
+  "Aang",
+  "Finn the Human",
+  "Tanjiro",
+  "Rico Nasty",
+  "Olivia Rodrigo",
+  "Bree Van de Kamp",
+  "Lynette Scavo",
+  "Susan Mayer",
+  "Gabrielle Solis",
+  "Zuko",
+  "Sonic the Hedgehog",
+  "iCarly"
 ];
+
+let actionList = [
+  "kick", "slam", "slap", "punch", "push", "swipe", "stare down", "strike", "magic spell", "kamahameha", "rasengan", "detroit smash", "big bang attack", "spirit bomb", "tickle", "falcon punch", "dragon punch", "taunt", "double kick", "double punch", "burn", "blast", "chomp"
+]
 
 
 // function to get random number between low and highest number
@@ -54,6 +70,11 @@ function randomName(names) {
    return Math.floor(Math.random() * names.length);
 }
 
+function randomMove(actionList) {
+  return Math.floor(Math.random() * actionList.length);
+}
+let action = actionList[randomMove(actionList)].toUpperCase();
+
 // function to generate random stats
 function createCharacter() {
   return {
@@ -62,11 +83,11 @@ function createCharacter() {
     hitPoints: getRandomNumberBetween(5, 30),
     defense: getRandomNumberBetween(1, 29),
     strength: getRandomNumberBetween(1, 10),
-    persuasion: getRandomNumberBetween(1, 10),
+  /*  persuasion: getRandomNumberBetween(1, 10),
     magic: getRandomNumberBetween(1, 10),
     cooking: getRandomNumberBetween(1, 10),
-    evasion: getRandomNumberBetween(1, 10),
-    secretStat: getRandomNumberBetween(1, 100),
+    evasion: getRandomNumberBetween(1, 10), */
+    luck: getRandomNumberBetween(1, 100),
   };
 }
 
@@ -107,8 +128,8 @@ let playerOneDamage;
 let playerTwoDamage;
 let playerOneDefense = playerOne.defense;
 let playerTwoDefense = playerTwo.defense;
-let playerOneSecretStat = playerOne.secretStat;
-let playerTwoSecretStat = playerTwo.secretStat;
+let playerOneSecretStat = playerOne.luck;
+let playerTwoSecretStat = playerTwo.luck;
 
 // secret stat randomizer
 function randomSecretStat() {
@@ -166,9 +187,9 @@ function randomDefensePoints() {
 function playerOneAttack() {
   battleLog.innerHTML =
     "<strong>" + playerOne.name +
-    "</strong> hits <strong>" +
+    "</strong> uses " + action + " against <strong>" +
     playerTwo.name +
-    "</strong> dealing <strong>" +
+    "</strong>. It's effective and deals <strong>" +
     playerOneDamage +
     " damage.</strong><br>";
   playerTwoHealth -= playerOneDamage;
@@ -192,9 +213,9 @@ function playerOneAttack() {
 function playerTwoAttack() {
   battleLog.innerHTML =
     "<strong>" + playerTwo.name +
-    "</strong> hits <strong>" +
+    "</strong> uses " + action + " against <strong>" +
     playerOne.name +
-    "</strong> dealing <strong>" +
+    "</strong>. It's effective and deals <strong>" +
     playerTwoDamage +
     " damage.</strong>" +
     "<br>";
@@ -222,7 +243,7 @@ function displayDefense() {
 
 // function when defense is successful 
 function defendSuccessText(defendant, attacker) {
-    battleLog.innerHTML = "<strong>" + defendant.name + "</strong> attempts to defend against <strong>" + attacker.name + "</strong>. 0 damage! Awesome!<br>";
+    battleLog.innerHTML = "<strong>" + defendant.name + "</strong> creates a defense barrier around them. <strong>" + attacker.name  + "</strong> uses <strong>" + action + "</strong> and it does 0 damage!<br>";
      battleLog.innerHTML +=
     "<strong>" +
     playerOne.name +
@@ -239,7 +260,7 @@ function defendSuccessText(defendant, attacker) {
 
 // function when defense is not successful 
 function defendFailText(defendant, attacker) {
-    battleLog.innerHTML = "<strong>" + defendant.name + "</strong> attempts to defend against <strong>" + attacker.name + "</strong>. <br>A bit of damage was done.<br>";
+     battleLog.innerHTML = "<strong>" + defendant.name + "</strong> tries to create a defense barrier around them. But got distracted by the clouds in the sky. Defense barrier fails! <strong>" + attacker.name  + "</strong> uses <strong>" + action + "</strong> and it does some damage!<br>";
     playerOneHealth -= playerTwoDamage;
 
  battleLog.innerHTML +=
@@ -263,13 +284,13 @@ function drawText() {
     playerOne.name +
     "</strong> and <strong>" +
     playerTwo.name +
-    "</strong> got distracted by a dancing mushroom. Wait what?? Ok, Let's try this again.";
+    "</strong> started talking and realized they actually have a mutual friend in common. What a small world! They start to, wait, get back to fighting you guys!!!!!";
 }
 
 // function when no damage occurs
 function noDamageText(attacker, receiver, receiverHealth, attackerHealth) {
   battleLog.innerHTML =
-   "<strong>" + attacker.name + "</strong> attempts to hit <strong>" + receiver.name + "</strong> but misses!<br>";
+   "<strong>" + attacker.name + "</strong> attempts to use <strong>" + action + "</strong> against <strong> "+ receiver.name + "</strong> but misses!<br>";
    
   battleLog.innerHTML +=
     "<strong>" + attacker.name + " health:</strong> " + attackerHealth + "<br>";
@@ -299,8 +320,10 @@ function gameOverText(winner) {
 
 // battle button, initiating battle
 startButton.addEventListener("click", function () {
+    battleLog.innerHTML =
+    "Welcome to Battle Simulator! Your goal is to battle against the computer and try to win!";
   battleLog.innerHTML =
-    "<strong>" + playerOne.name + "</strong> and <strong>" + playerTwo.name + "</strong> begin to battle!" + "<br>";
+    "<strong>" + playerOne.name + "</strong> (You) and <strong>" + playerTwo.name + "</strong>  (Computer) begin to battle!" + "<br>";
 statsButton.style.display = "block";
 defendButton.style.display = "block";
 });
