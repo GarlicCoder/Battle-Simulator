@@ -10,6 +10,7 @@ const attackButton = document.querySelector(".js-attack-button");
 const battleLog = document.getElementById("battle-log");
 const winnerContainer = document.getElementById("winner");
 const playerStats = document.getElementById("player-stats");
+let action;
 
 // declare names
 const names = [
@@ -56,34 +57,34 @@ const names = [
   "iCarly"
 ];
 
-let actionList = [
-  "kick", "slam", "slap", "punch", "push", "swipe", "stare down", "strike", "magic spell", "kamahameha", "rasengan", "detroit smash", "big bang attack", "spirit bomb", "tickle", "falcon punch", "dragon punch", "taunt", "double kick", "double punch", "burn", "blast", "chomp"
-]
-
+function randomAction() {
+  let actionList = [
+  "KICK", "SLAM", "SLAP", "PUNCH", "PUSH", "SWIPE", "STARE DOWN", "STRIKE", "MAGIC SPELL", "KAMAHAMEHA", "RASENGAN", "DETROIT SMASH", "BIG BANG ATTACK", "SPIRIT BOMB", "TICKLE", "FALCON PUNCH", "DRAGON PUNCH", "TAUNT", "DOUBLE KICK", "DOUBLE PUNCH", "BURN", "BLAST", "CHOMP"
+];
+  action = actionList[Math.floor(Math.random() * actionList.length)];
+}
 
 // function to get random number between low and highest number
 function getRandomNumberBetween(low, high) {
   return Math.floor(low + Math.random() * (high - low + 1));
 }
 
+// function to get random names
 function randomName(names) {
    return Math.floor(Math.random() * names.length);
 }
 
-function randomMove(actionList) {
-  return Math.floor(Math.random() * actionList.length);
-}
-let action = actionList[randomMove(actionList)].toUpperCase();
+
 
 // function to generate random stats
 function createCharacter() {
   return {
     name: names[randomName(names)],
-    health: getRandomNumberBetween(100, 200),
+    health: getRandomNumberBetween(250, 300),
     hitPoints: getRandomNumberBetween(5, 30),
-    defense: getRandomNumberBetween(1, 29),
-    strength: getRandomNumberBetween(1, 10),
-  /*  persuasion: getRandomNumberBetween(1, 10),
+    defense: getRandomNumberBetween(1, 20),
+    /* strength: getRandomNumberBetween(1, 10),
+   persuasion: getRandomNumberBetween(1, 10),
     magic: getRandomNumberBetween(1, 10),
     cooking: getRandomNumberBetween(1, 10),
     evasion: getRandomNumberBetween(1, 10), */
@@ -130,12 +131,15 @@ let playerOneDefense = playerOne.defense;
 let playerTwoDefense = playerTwo.defense;
 let playerOneSecretStat = playerOne.luck;
 let playerTwoSecretStat = playerTwo.luck;
+let actionNumber;
+
+
 
 // secret stat randomizer
 function randomSecretStat() {
   playerOneSecretStat = getRandomNumberBetween(0, 100);
   playerTwoSecretStat = getRandomNumberBetween(0, 100);
-displaySecretStat
+displaySecretStat;
 }
 
 function displaySecretStat() {
@@ -159,16 +163,14 @@ function randomDamagePoints() {
 };
 
 function decreasedDamagePoints() {
-  playerOneDamage = playerOne.hitPoints - (Math.floor(Math.random() * playerTwo.defense) / 2);
-  playerTwoDamage = playerTwo.hitPoints - (Math.floor(Math.random() * playerOne.defense) / 2);
+  playerOneDamage = Math.floor(Math.random() * 11);
+  playerTwoDamage = Math.floor(Math.random() * 11);
    if (playerOneDamage <= 0) {
-        playerOneDamage = 0;
+        playerOneDamage = 1;
     } else if (playerTwoDamage <= 0) {
-        playerTwoDamage = 0;
-
+        playerTwoDamage = 1;
     }
         displayDamage();
-
 ;}
 
 function displayDamage() {
@@ -187,7 +189,7 @@ function randomDefensePoints() {
 function playerOneAttack() {
   battleLog.innerHTML =
     "<strong>" + playerOne.name +
-    "</strong> uses " + action + " against <strong>" +
+    "</strong> uses <strong>" + action + "</strong> against <strong>" +
     playerTwo.name +
     "</strong>. It's effective and deals <strong>" +
     playerOneDamage +
@@ -206,14 +208,14 @@ function playerOneAttack() {
     playerTwoHealth +
     " (-" +
     playerOneDamage +
-    ")<br>";
+    ")<br> <img src=\"https://web.archive.org/web/20090731102826/http://hk.geocities.com/garveyhk/hamster/hamster/bite.gif\">";
 };
 
 // function when player two attacks successfully
 function playerTwoAttack() {
   battleLog.innerHTML =
     "<strong>" + playerTwo.name +
-    "</strong> uses " + action + " against <strong>" +
+    "</strong> uses <strong>" + action + "</strong> against <strong>" +
     playerOne.name +
     "</strong>. It's effective and deals <strong>" +
     playerTwoDamage +
@@ -233,7 +235,7 @@ function playerTwoAttack() {
     playerTwo.name +
     " health:</strong> " +
     playerTwoHealth +
-    "<br>";
+    "<br> <img src=\"https://web.archive.org/web/20090731102827/http://hk.geocities.com/garveyhk/hamster/hamster/sick3.gif\">";
 };
 
 function displayDefense() {
@@ -255,12 +257,12 @@ function defendSuccessText(defendant, attacker) {
     playerTwo.name +
     " health:</strong> " +
     playerTwoHealth +
-    "<br>";
+    "<br> <img src=\"https://web.archive.org/web/20090731102827/http://hk.geocities.com/garveyhk/hamster/hamster/play1.gif\">";
 }
 
 // function when defense is not successful 
 function defendFailText(defendant, attacker) {
-     battleLog.innerHTML = "<strong>" + defendant.name + "</strong> tries to create a defense barrier around them. But got distracted by the clouds in the sky. Defense barrier fails! <strong>" + attacker.name  + "</strong> uses <strong>" + action + "</strong> and it does some damage!<br>";
+     battleLog.innerHTML = "<strong>" + defendant.name + "</strong> tries to create a defense barrier around them. But they accidentally farted instead! How embarrassing...The defense barrier fails... <br><strong>" + attacker.name  + "</strong> uses <strong>" + action + "</strong> and it does some damage!<br>";
     playerOneHealth -= playerTwoDamage;
 
  battleLog.innerHTML +=
@@ -273,7 +275,7 @@ function defendFailText(defendant, attacker) {
     "<strong>" +
     playerTwo.name +
     " health:</strong> " + 
-    playerTwoHealth + "<br>";
+    playerTwoHealth + "<br> <img src=\"https://web.archive.org/web/20091027013601/http://hk.geocities.com/garveyhk/hamster/hamster/doublerod.gif\">";
 }
 
 
@@ -284,7 +286,8 @@ function drawText() {
     playerOne.name +
     "</strong> and <strong>" +
     playerTwo.name +
-    "</strong> started talking and realized they actually have a mutual friend in common. What a small world! They start to, wait, get back to fighting you guys!!!!!";
+    "</strong> started talking and realized they actually have a mutual friend in common. What a small world! Wait a second, get back to fighting you guys!!!!! <br> <img src=\"https://web.archive.org/web/20090731102826/http://hk.geocities.com/garveyhk/hamster/hamster/angry.gif\">";
+
 }
 
 // function when no damage occurs
@@ -295,7 +298,7 @@ function noDamageText(attacker, receiver, receiverHealth, attackerHealth) {
   battleLog.innerHTML +=
     "<strong>" + attacker.name + " health:</strong> " + attackerHealth + "<br>";
   battleLog.innerHTML +=
-    "<strong>" + receiver.name + " health:</strong> " + receiverHealth + "<br>";
+    "<strong>" + receiver.name + " health:</strong> " + receiverHealth + "<br> <img src=\"https://web.archive.org/web/20090731102827/http://hk.geocities.com/garveyhk/hamster/hamster/look.gif\">";
 }
 
 // function when health reaches 0
@@ -321,8 +324,8 @@ function gameOverText(winner) {
 // battle button, initiating battle
 startButton.addEventListener("click", function () {
     battleLog.innerHTML =
-    "Welcome to Battle Simulator! Your goal is to battle against the computer and try to win!";
-  battleLog.innerHTML =
+    "Welcome to Battle Simulator! Your goal is to battle against the computer and try to win!<br>";
+  battleLog.innerHTML +=
     "<strong>" + playerOne.name + "</strong> (You) and <strong>" + playerTwo.name + "</strong>  (Computer) begin to battle!" + "<br>";
 statsButton.style.display = "block";
 defendButton.style.display = "block";
@@ -332,6 +335,7 @@ defendButton.style.display = "block";
 attackButton.addEventListener("click", function () {
     randomSecretStat();
     randomDamagePoints();
+    randomAction();
   if (playerOneSecretStat > playerTwoSecretStat) {
     if (playerOneDamage <= 0) {
       noDamageText(playerOne, playerTwo, playerTwoHealth, playerOneHealth);
@@ -360,7 +364,9 @@ attackButton.addEventListener("click", function () {
 defendButton.addEventListener("click", function () {
     displayDefense();
     randomSecretStat();
-    decreasedDamagePoints()
+    decreasedDamagePoints();
+    randomAction();
+
     if (playerOneSecretStat > playerTwoSecretStat) {
         if (playerOneDefense > playerTwoDefense) {
             defendSuccessText(playerOne, playerTwo)
